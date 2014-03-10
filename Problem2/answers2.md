@@ -31,9 +31,9 @@ The data types are th’s inside of tr’s.
 </p>
 
 <p>
-Second row of table: $(“”)
+Second row of table: $("tr:nth(1)")
 </p>
 <p>
-All table rows except the header (first) row: 
+All table rows except the header (first) row: $("tr:gt(0)")
 </p>
 
