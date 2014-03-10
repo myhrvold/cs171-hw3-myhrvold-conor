@@ -18,18 +18,17 @@ Finally, we are likely dealing with different numbers of sig figs which could be
 </p>
 
 <p>
-The DOM progression to get from the data is: html -> body -> div id=”content” ->  div id=”bodyContent” -> table class=”wikitable” -> tbody
-</p>
-<p>
-The data types are th’s inside of tr’s.
-</p>
-
-<p>
 <b> 
 2.	Take a look at the DOM tree for the Wikipedia table. Formulate in jQuery selector syntax the selection that would give you the DOM element for the second row in the Wikipedia table. Write down in selection syntax how you would get all table rows that are not the header row.
 </b>
 </p>
 
+<p>
+The DOM progression to get from the data is: html -> body -> div id=”content” ->  div id=”bodyContent” -> table class=”wikitable” -> tbody
+</p>
+<p>
+The data types are th’s (table header cells) inside of tr’s (table rows), all within a table.
+</p>
 <p>
 Second row of table: $("tr:nth(1)")
 </p>
