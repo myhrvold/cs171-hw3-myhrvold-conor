@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wikipedia Population Table Scrape</title>
+    <script src="../libs/jquery-1.10.1.js"></script>
+    <script src="../libs/jquery.xdomainajax.js"></script>
+    <script src="../libs/d3.v3.min.js"></script>
+    <script src="../libs/FileSaver.js"></script>
+</head>
+<body>
+<script>
+    var convertToInt;
+
+    $.ajax({
+        url: "http://en.wikipedia.org/wiki/World_population_estimates",
+        type: 'GET',
+        cache: false,
+        success: function(data) {
+            var root = $("<div></div>")
+            root.html(data.responseText)
+            var content = root.find("#content"); // find all the nodes that have ID "content"
+            var tbody_table = content.find(".wikitable tbody"); // "wikitable" class    ... could also add tbody  
+            
+            var tr_row = tbody_table.find("tr"); //grab rows
+            
+            var titles = $(tr_row[0]).text().trim(); //console.log(titles); //grab header row. technically duplicative -- see header variable below
+            //one string with all column headers ...in same format as HW specs. hard to get abbrevs from original headers.
+            var header = ["year,USCensus,PopulationBureau,UN,HYDE,Maddison"]; //   + "\n"  
+            
+            var data = []; //to store data that I will scrape
+            
+            tr_row.each( function(i,d) { var td_element = $(d).find("td"); //td elements in object ... could use jQuery gt or lt but I slice data later
+
+                                         var year = convertToInt($(td_element[0]).text()); // year ...no need for trim()
+                                         var uscensus = convertToInt($(td_element[1]).text()); // USCensus                                     
+                                         var popbureau = convertToInt($(td_element[2]).text()); // PopulationBureau
+                                         var un = convertToInt($(td_element[3]).text()); // UN 
+                                         var hyde = convertToInt($(td_element[4]).text()); // HYDE
+                                         var maddison = convertToInt($(td_element[5]).text()); // Maddison
+                                         
+                                         //get rid of NaNs for each variable
+                                         if( isNaN(year)) {
+                                            year = "";
+                                         }                                         
+                                         if( isNaN(uscensus)) {
+                                            uscensus = "";
+                                         }
+                                         if( isNaN(popbureau)) {
+                                            popbureau = "";
+                                         }
+                                         if( isNaN(un)) {
+                                            un = "";
+                                         }
+                                         if( isNaN(hyde)) {
+                                            hyde = "";
+                                         }
+                                         if( isNaN(maddison)) {
+                                            maddison = "";
+                                         }
+                                        
+                                        //at the end combine into 1 string. concatenate string and add comma for csv file, along with new line                 
+                                        var line_string = year.toString() + "," + uscensus + "," + popbureau + "," + un + "," + hyde + "," + maddison ; // + "\n" is not necessary
+                                         
+                                        data.push(line_string); //push each string on next row of data file
+                                        //console.log(line_string);                                      
+                                        });
+                                        
+            data = data.slice(11); //get rid of years below zero by slicing data array
+            var header = header.concat(data); //concatenate with the header file
+            //console.log(header); 
+            
+            saveToFile(header,"pop_data.txt"); //save file
+            //console.log(header);
+            
+        },
+        error: function() {
+            return console.log("error -- check syntax");
+        }
+    });
+
+    convertToInt = function(s) {
+        return parseInt(s.replace(/,/g, ""), 10);
+    };
+	
+    /* takes an array of strings
+       and writes them line by line into a file given by filename
+     */
+    var saveToFile = function(arrayOfLines, fileName) {
+       //console.log(arrayOfLines);
+       /* adds linebreaks at the end*/
+       var blob, blobText;
+       blobText = arrayOfLines.map(function(d) {
+         //console.log(d);
+         if (d.endsWith("\n")) {
+           return d;
+         } else {
+           return d + "\n";
+         }
+       });
+       blob = new Blob(blobText, {
+         type: "text/plain;charset=utf-8"
+       });
+       //console.log(blob);
+       return saveAs(blob, fileName);
+     };
+
+     String.prototype.endsWith = function(suffix) {
+       return this.indexOf(suffix, this.length - suffix.length) !== -1;
+     };
+</script>
+</body>
+</html>
