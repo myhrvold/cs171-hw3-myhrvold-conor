@@ -27,7 +27,7 @@ Finally, we are likely dealing with different numbers of sig figs which could be
 The DOM progression to get from the data is: html -> body -> div id=”content” ->  div id=”bodyContent” -> table class=”wikitable” -> tbody
 </p>
 <p>
-The data types are th’s (table header cells) inside of tr’s (table rows), all within a table.
+The data types are th’s (table header cells) inside of tr’s (table rows), all within a table. The index starts at 0, so the 2nd row is index 1. index 0 is the header row, and does not contain data.
 </p>
 <p>
 Second row of table: $("tr:nth(1)")
