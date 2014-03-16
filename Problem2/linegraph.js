@@ -142,8 +142,8 @@
                 if( !isNaN(current_pop[j].pop) && !isNaN(current_pop[j-1].pop) ) {
                     var X1 = xScale(current_pop[j].year);
                     var Y1 = yScale(current_pop[j].pop);
-                    var X2 = xScale(current_pop[j+1].year); //neighbor
-                    var Y2 = yScale(current_pop[j+1].pop);  //neighbor                   
+                    var X2 = xScale(current_pop[j-1].year); //neighbor
+                    var Y2 = yScale(current_pop[j-1].pop);  //neighbor                   
                     visFrame.attr("class", "lines")
                             .append("path")
                             .attr("d","M "+X1+" "+Y1+" L "+X2+" "+Y2+"")
