@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wikipedia World Population</title>
+    
+    <div align="center"> 
+    <h3> Wikipedia World Population </h3>
+    <h4> 0 AD - 2050 AD, 5 estimates </h4>
+    </div>
+    
+    <script src="../libs/d3.v3.min.js"></script>
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: lightgrey;
+            shape-rendering: crispEdges; }
+
+        .dataArea {
+            stroke: 1px steelblue;
+            fill:steelblue;
+            fill-opacity:0.5;
+            clip-path: url(#clip);
+        }
+
+        #mySVG {
+        margin-left:auto; 
+        margin-right: auto; 
+        display:block;
+        } 
+        
+    </style>
+
+</head>
+<body>
+    <div id="vis"></div>
+
+
+	<script src = "linegraph.js"></script>
+
+
+</body>
+</html>
