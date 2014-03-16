@@ -80,7 +80,7 @@
           xScale = d3.scale.linear().domain([0,2050]).range([0,bbVis.w]);  // 0 AD - 2050 AD (d3.extent dataset year returns 0-900 for some reason...)
           yScale = d3.scale.linear().domain([0,10e9]).range([bbVis.h,0]); // define the right y domain and range -- use bbVis
           //define axes
-          xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+          xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.format("d"));
           yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(4);   
         
 		  // example that translates to the bottom left of our vis space:
